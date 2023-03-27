@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Abp.Pschool.Parents;
+using Abp.Pschool.Students;
+using AutoMapper;
 
 namespace Abp.Pschool;
 
@@ -6,8 +8,9 @@ public class PschoolApplicationAutoMapperProfile : Profile
 {
     public PschoolApplicationAutoMapperProfile()
     {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
+        CreateMap<Student, StudentDto>();
+        CreateMap<CreateUpdateStudentDto, Student>();
+        CreateMap<Parent, ParentDto>();
+        CreateMap<CreateUpdateParentDto, Parent>();
     }
 }

@@ -10,11 +10,14 @@
     "Close": "Close",
     "Delete": "Delete",
     "Edit": "Edit",
-    "PublishDate": "Publish date",
+    "ClassNumber": "Class number",
+    "Email": "Email",
+    "Phone": "Phone",
+    "HomeAddress": "Home address",
     "NewStudent": "New student",
-    "Name": "Name",
+    "FirstName": "First name",
+    "LastName": "Last name",
     "Type": "Type",
-    "Price": "Price",
     "CreationTime": "Creation time",
     "AreYouSure": "Are you sure?",
     "AreYouSureToDelete": "Are you sure you want to delete this item?",
@@ -22,6 +25,11 @@
     "Enum:StudentMarkType.1": "Good",
     "Enum:StudentMarkType.2": "Satisfactory",
     "Enum:StudentMarkType.3": "Bad",
-    "Enum:StudentMarkType.4": "Unsatisfactory"
+    "Enum:StudentMarkType.4": "Unsatisfactory",
+    "Menu:ParentStore": "Parent Store",
+    "Menu:Parents": "Parents",
+    "NewParent": "New parent",
+    "Students": "Students",
+    "Parents": "Parents" 
   }
 }

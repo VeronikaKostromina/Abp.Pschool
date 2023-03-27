@@ -16,5 +16,6 @@ namespace Abp.Pschool.Students
         [Required(ErrorMessage = "Email can not be empty")]
         [EmailAddress(ErrorMessage = "Not a valid email address")]
         public string? Email { get; set; }
+        public StudentMarkType? StudentMarkType { get; set; }
     }
 }

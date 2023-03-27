@@ -1,7 +1,48 @@
 ﻿@page "/students"
+@using Volo.Abp.Application.Dtos
+@using Abp.Pschool.Students
+@using Abp.Pschool.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<PschoolResource> L
+@inherits AbpCrudPageBase<IStudentAppService, StudentDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateStudentDto>
 
-<h2>Students</h2>
+<Card>
+    <CardHeader>
+        <h2>@L["Students"]</h2>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="StudentDto"
+                  Data="Entities"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.FirstName)"
+                                Caption="@L["FirstName"]"></DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.LastName)"
+                                Caption="@L["LastName"]"></DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.StudentMarkType)"
+                                Caption="@L["Type"]">
+                    <DisplayTemplate>
+                        @L[$"Enum:StudentMarkType.{context.StudentMarkType}"]
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.ClassNumber)"
+                                Caption="@L["ClassNumber"]"></DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.Email)"
+                                Caption="@L["Email"]">
+                </DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
 
-@code {
-
+@code
+{
 }

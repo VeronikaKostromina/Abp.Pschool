@@ -11,6 +11,6 @@ namespace Abp.Pschool.Students
         public Guid ParentId { get; set; }
         public string? ParentFullName { get; set; }
         public string? Email { get; set; }
-
+        public StudentMarkType? StudentMarkType { get; set; }
     }
 }

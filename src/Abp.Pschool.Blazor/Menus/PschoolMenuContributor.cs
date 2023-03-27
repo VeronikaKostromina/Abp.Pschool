@@ -61,6 +61,21 @@ public class PschoolMenuContributor : IMenuContributor
             )
         );
 
+        context.Menu.AddItem(
+            new ApplicationMenuItem(
+                "ParentStore",
+                l["Menu:ParentStore"],
+                icon: "fas fa-users"
+            ).AddItem(
+                new ApplicationMenuItem(
+                    "ParentStore.Parents",
+                    l["Menu:Parents"],
+                    url: "/parents"
+                )
+            )
+        );
+
+
         var administration = context.Menu.GetAdministration();
 
         if (MultiTenancyConsts.IsEnabled)
