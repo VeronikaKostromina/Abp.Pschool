@@ -63,14 +63,14 @@ public class PschoolMenuContributor : IMenuContributor
 
         context.Menu.AddItem(
             new ApplicationMenuItem(
-                "ParentStore",
-                l["Menu:ParentStore"],
+                "TeacherStore",
+                l["Menu:TeacherStore"],
                 icon: "fas fa-users"
             ).AddItem(
                 new ApplicationMenuItem(
-                    "ParentStore.Parents",
-                    l["Menu:Parents"],
-                    url: "/parents"
+                    "TeacherStore.Teachers",
+                    l["Menu:Teachers"],
+                    url: "/Teachers"
                 )
             )
         );

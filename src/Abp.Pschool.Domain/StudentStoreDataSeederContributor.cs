@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Abp.Pschool.Parents;
+using Abp.Pschool.Teachers;
 using Abp.Pschool.Students;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -28,12 +28,12 @@ namespace Abp.Pschool
                         LastName = "Jones",
                         ClassNumber = 1,
                         Email = "jones@gmail.com",
-                        StudentMarkType = StudentMarkType.Excellent,
-                        Parent = new Parent()
+                        Type = StudentMarkType.Excellent,
+                        Teacher = new Teacher()
                         {
-                            FirstName = "BobParent",
+                            FirstName = "BobTeacher",
                             LastName = "Jones",
-                            Email = "parent1@gmail.com"
+                            Email = "Teacher1@gmail.com"
                         }
                     },
                     autoSave: true
@@ -46,12 +46,12 @@ namespace Abp.Pschool
                         LastName = "Smith",
                         ClassNumber = 10,
                         Email = "smith@gmail.com",
-                        StudentMarkType = StudentMarkType.Satisfactory,
-                        Parent = new Parent()
+                        Type = StudentMarkType.Satisfactory,
+                        Teacher = new Teacher()
                         {
-                            FirstName = "TomParent",
+                            FirstName = "TomTeacher",
                             LastName = "Smith",
-                            Email = "parent2@gmail.com"
+                            Email = "Teacher2@gmail.com"
                         }
                     },
                     autoSave: true

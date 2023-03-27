@@ -8,9 +8,9 @@ namespace Abp.Pschool.Students
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public int ClassNumber { get; set; }
-        public Guid ParentId { get; set; }
-        public string? ParentFullName { get; set; }
+        public Guid TeacherId { get; set; }
+        public string? TeacherFullName { get; set; }
         public string? Email { get; set; }
-        public StudentMarkType? StudentMarkType { get; set; }
+        public StudentMarkType Type { get; set; }
     }
 }

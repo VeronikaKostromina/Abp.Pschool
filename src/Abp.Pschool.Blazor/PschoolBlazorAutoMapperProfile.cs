@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Abp.Pschool.Students;
+using Abp.Pschool.Teachers;
+using AutoMapper;
 
 namespace Abp.Pschool.Blazor;
 
@@ -6,6 +8,8 @@ public class PschoolBlazorAutoMapperProfile : Profile
 {
     public PschoolBlazorAutoMapperProfile()
     {
-        //Define your AutoMapper configuration here for the Blazor project.
+        CreateMap<StudentDto, CreateUpdateStudentDto>();
+
+        CreateMap<TeacherDto, CreateUpdateTeacherDto>();
     }
 }

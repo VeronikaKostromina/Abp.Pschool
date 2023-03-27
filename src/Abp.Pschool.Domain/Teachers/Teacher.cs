@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Abp.Pschool.Students;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace Abp.Pschool.Parents
+namespace Abp.Pschool.Teachers
 {
-    public class Parent : AuditedAggregateRoot<Guid>
+    public class Teacher : AuditedAggregateRoot<Guid>
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

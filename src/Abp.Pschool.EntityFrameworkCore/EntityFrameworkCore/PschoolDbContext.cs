@@ -1,6 +1,6 @@
-﻿using Abp.Pschool.Parents;
-using Abp.Pschool.StudentDocuments;
+﻿using Abp.Pschool.StudentDocuments;
 using Abp.Pschool.Students;
+using Abp.Pschool.Teachers;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -56,7 +56,7 @@ public class PschoolDbContext :
 
     //Abp Pschool
     public DbSet<Student> Students { get; set; }
-    public DbSet<Parent> Parents { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
     public DbSet<StudentDocument> StudentDocuments { get; set; }
 
 
@@ -95,9 +95,9 @@ public class PschoolDbContext :
             b.Property(x => x.Email).IsRequired();
 
             b
-                .HasOne(x => x.Parent)
+                .HasOne(x => x.Teacher)
                 .WithMany(x => x.Students)
-                .HasForeignKey(x => x.ParentId);
+                .HasForeignKey(x => x.TeacherId);
             b
                 .HasOne(x => x.StudentDocument)
                 .WithOne(x => x.Student)
@@ -105,9 +105,9 @@ public class PschoolDbContext :
 
         });
 
-        builder.Entity<Parent>(b =>
+        builder.Entity<Teacher>(b =>
         {
-            b.ToTable(PschoolConsts.DbTablePrefix + "Parents", PschoolConsts.DbSchema);
+            b.ToTable(PschoolConsts.DbTablePrefix + "Teachers", PschoolConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.FirstName).IsRequired();
             b.Property(x => x.LastName).IsRequired();

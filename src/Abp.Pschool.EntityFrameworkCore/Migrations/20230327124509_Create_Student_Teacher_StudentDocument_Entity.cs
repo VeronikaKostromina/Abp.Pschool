@@ -6,13 +6,37 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Abp.Pschool.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateStudentParentStudentDocumentEntity : Migration
+    public partial class CreateStudentTeacherStudentDocumentEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_TeacherId",
+                table: "AbpOrganizationUnits");
+
+            migrationBuilder.RenameColumn(
+                name: "TeacherName",
+                table: "AbpPermissions",
+                newName: "ParentName");
+
+            migrationBuilder.RenameColumn(
+                name: "TeacherId",
+                table: "AbpOrganizationUnits",
+                newName: "ParentId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_AbpOrganizationUnits_TeacherId",
+                table: "AbpOrganizationUnits",
+                newName: "IX_AbpOrganizationUnits_ParentId");
+
+            migrationBuilder.RenameColumn(
+                name: "TeacherName",
+                table: "AbpFeatures",
+                newName: "ParentName");
+
             migrationBuilder.CreateTable(
-                name: "AppParents",
+                name: "AppTeachers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -30,7 +54,7 @@ namespace Abp.Pschool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppParents", x => x.Id);
+                    table.PrimaryKey("PK_AppTeachers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,8 +66,8 @@ namespace Abp.Pschool.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClassNumber = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentMarkType = table.Column<int>(type: "int", nullable: true),
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -55,9 +79,9 @@ namespace Abp.Pschool.Migrations
                 {
                     table.PrimaryKey("PK_AppStudents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppStudents_AppParents_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "AppParents",
+                        name: "FK_AppStudents_AppTeachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "AppTeachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -94,14 +118,25 @@ namespace Abp.Pschool.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppStudents_ParentId",
+                name: "IX_AppStudents_TeacherId",
                 table: "AppStudents",
-                column: "ParentId");
+                column: "TeacherId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_ParentId",
+                table: "AbpOrganizationUnits",
+                column: "ParentId",
+                principalTable: "AbpOrganizationUnits",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_ParentId",
+                table: "AbpOrganizationUnits");
+
             migrationBuilder.DropTable(
                 name: "AppStudentDocuments");
 
@@ -109,7 +144,34 @@ namespace Abp.Pschool.Migrations
                 name: "AppStudents");
 
             migrationBuilder.DropTable(
-                name: "AppParents");
+                name: "AppTeachers");
+
+            migrationBuilder.RenameColumn(
+                name: "ParentName",
+                table: "AbpPermissions",
+                newName: "TeacherName");
+
+            migrationBuilder.RenameColumn(
+                name: "ParentId",
+                table: "AbpOrganizationUnits",
+                newName: "TeacherId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_AbpOrganizationUnits_ParentId",
+                table: "AbpOrganizationUnits",
+                newName: "IX_AbpOrganizationUnits_TeacherId");
+
+            migrationBuilder.RenameColumn(
+                name: "ParentName",
+                table: "AbpFeatures",
+                newName: "TeacherName");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_TeacherId",
+                table: "AbpOrganizationUnits",
+                column: "TeacherId",
+                principalTable: "AbpOrganizationUnits",
+                principalColumn: "Id");
         }
     }
 }

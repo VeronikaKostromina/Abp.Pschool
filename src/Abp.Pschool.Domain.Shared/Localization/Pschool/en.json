@@ -26,10 +26,10 @@
     "Enum:StudentMarkType.2": "Satisfactory",
     "Enum:StudentMarkType.3": "Bad",
     "Enum:StudentMarkType.4": "Unsatisfactory",
-    "Menu:ParentStore": "Parent Store",
-    "Menu:Parents": "Parents",
-    "NewParent": "New parent",
+    "Menu:TeacherStore": "Teacher Store",
+    "Menu:Teachers": "Teachers",
+    "NewTeacher": "New Teacher",
     "Students": "Students",
-    "Parents": "Parents" 
+    "Teachers": "Teachers"
   }
 }

@@ -107,7 +107,7 @@ namespace Abp.Pschool.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GroupName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ParentName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    TeacherName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     DisplayName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     DefaultValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -158,7 +158,7 @@ namespace Abp.Pschool.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Code = table.Column<string>(type: "nvarchar(95)", maxLength: 95, nullable: false),
                     DisplayName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     EntityVersion = table.Column<int>(type: "int", nullable: false),
@@ -176,8 +176,8 @@ namespace Abp.Pschool.Migrations
                 {
                     table.PrimaryKey("PK_AbpOrganizationUnits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_ParentId",
-                        column: x => x.ParentId,
+                        name: "FK_AbpOrganizationUnits_AbpOrganizationUnits_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "AbpOrganizationUnits",
                         principalColumn: "Id");
                 });
@@ -218,7 +218,7 @@ namespace Abp.Pschool.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GroupName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ParentName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    TeacherName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     DisplayName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     IsEnabled = table.Column<bool>(type: "bit", nullable: false),
                     MultiTenancySide = table.Column<byte>(type: "tinyint", nullable: false),
@@ -822,9 +822,9 @@ namespace Abp.Pschool.Migrations
                 column: "Code");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpOrganizationUnits_ParentId",
+                name: "IX_AbpOrganizationUnits_TeacherId",
                 table: "AbpOrganizationUnits",
-                column: "ParentId");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AbpPermissionGrants_TenantId_Name_ProviderName_ProviderKey",

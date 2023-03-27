@@ -1,5 +1,5 @@
-﻿using Abp.Pschool.Parents;
-using Abp.Pschool.Students;
+﻿using Abp.Pschool.Students;
+using Abp.Pschool.Teachers;
 using AutoMapper;
 
 namespace Abp.Pschool;
@@ -10,7 +10,9 @@ public class PschoolApplicationAutoMapperProfile : Profile
     {
         CreateMap<Student, StudentDto>();
         CreateMap<CreateUpdateStudentDto, Student>();
-        CreateMap<Parent, ParentDto>();
-        CreateMap<CreateUpdateParentDto, Parent>();
+
+
+        CreateMap<Teacher, TeacherDto>();
+        CreateMap<CreateUpdateTeacherDto, Teacher>();
     }
 }

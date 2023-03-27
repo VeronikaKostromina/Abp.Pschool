@@ -1,65 +1,63 @@
-﻿@page "/students"
+﻿@page "/Teachers"
 @using Volo.Abp.Application.Dtos
-@using Abp.Pschool.Students
+@using Abp.Pschool.Teachers
 @using Abp.Pschool.Localization
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<PschoolResource> L
 @inject AbpBlazorMessageLocalizerHelper<PschoolResource> LH
-@inherits AbpCrudPageBase<IStudentAppService, StudentDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateStudentDto>
+@inherits AbpCrudPageBase<ITeacherAppService, TeacherDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTeacherDto>
 
 <Card>
     <CardHeader>
         <Row Class="justify-content-between">
             <Column ColumnSize="ColumnSize.IsAuto">
-                <h2>@L["Students"]</h2>
+                <h2>@L["Teachers"]</h2>
             </Column>
             <Column ColumnSize="ColumnSize.IsAuto">
                 <Button Color="Color.Primary"
-                        Clicked="OpenCreateModalAsync">@L["NewStudent"]</Button>
+                        Clicked="OpenCreateModalAsync">
+                    @L["NewTeacher"]
+                </Button>
             </Column>
-        </Row> 
+        </Row>
     </CardHeader>
     <CardBody>
-        <DataGrid TItem="StudentDto"
+        <DataGrid TItem="TeacherDto"
                   Data="Entities"
                   ReadData="OnDataGridReadAsync"
                   TotalItems="TotalCount"
                   ShowPager="true"
                   PageSize="PageSize">
             <DataGridColumns>
-                <DataGridEntityActionsColumn TItem="StudentDto" @ref="@EntityActionsColumn">
+                <DataGridEntityActionsColumn TItem="TeacherDto" @ref="@EntityActionsColumn">
                     <DisplayTemplate>
-                        <EntityActions TItem="StudentDto" EntityActionsColumn="@EntityActionsColumn">
-                            <EntityAction TItem="StudentDto"
+                        <EntityActions TItem="TeacherDto" EntityActionsColumn="@EntityActionsColumn">
+                            <EntityAction TItem="TeacherDto"
                                           Text="@L["Edit"]"
                                           Clicked="() => OpenEditModalAsync(context)" />
-                            <EntityAction TItem="StudentDto"
+                            <EntityAction TItem="TeacherDto"
                                           Text="@L["Delete"]"
                                           Clicked="() => DeleteEntityAsync(context)"
                                           ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />                         
                         </EntityActions>
-                    </DisplayTemplate>
+                   </DisplayTemplate>
                 </DataGridEntityActionsColumn>
-                <DataGridColumn TItem="StudentDto"
-                                Field="@nameof(StudentDto.FirstName)"
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.FirstName)"
                                 Caption="@L["FirstName"]"></DataGridColumn>
-                <DataGridColumn TItem="StudentDto"
-                                Field="@nameof(StudentDto.LastName)"
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.LastName)"
                                 Caption="@L["LastName"]"></DataGridColumn>
-                <DataGridColumn TItem="StudentDto"
-                                Field="@nameof(StudentDto.Type)"
-                                Caption="@L["Type"]">
-                    <DisplayTemplate>
-                        @L[$"Enum:StudentMarkType.{context.Type}"]
-                    </DisplayTemplate>
-                </DataGridColumn>
-                <DataGridColumn TItem="StudentDto"
-                                Field="@nameof(StudentDto.ClassNumber)"
-                                Caption="@L["ClassNumber"]"></DataGridColumn>
-                <DataGridColumn TItem="StudentDto"
-                                Field="@nameof(StudentDto.Email)"
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.Phone)"
+                                Caption="@L["Phone"]"></DataGridColumn>
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.Email)"
                                 Caption="@L["Email"]">
                 </DataGridColumn>
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.HomeAddress)"
+                                Caption="@L["HomeAddress"]"></DataGridColumn>
             </DataGridColumns>
         </DataGrid>
     </CardBody>
@@ -70,7 +68,7 @@
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
-                <ModalTitle>@L["NewStudent"]</ModalTitle>
+                <ModalTitle>@L["NewTeacher"]</ModalTitle>
                 <CloseButton Clicked="CloseCreateModalAsync"/>
             </ModalHeader>
             <ModalBody>
@@ -95,17 +93,6 @@
                             </TextEdit>
                         </Field>
                     </Validation>
-                    <Field>
-                        <FieldLabel>@L["Type"]</FieldLabel>
-                        <Select TValue="StudentMarkType" @bind-SelectedValue="@NewEntity.Type">
-                            @foreach (int bookTypeValue in Enum.GetValues(typeof(StudentMarkType)))
-                            {
-                                <SelectItem TValue="StudentMarkType" Value="@((StudentMarkType) bookTypeValue)">
-                                    @L[$"Enum:StudentMarkType.{bookTypeValue}"]
-                                </SelectItem>
-                            }
-                        </Select>
-                    </Field>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Email"]</FieldLabel>
@@ -118,14 +105,22 @@
                     </Validation>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
-                            <FieldLabel>@L["ClassNumber"]</FieldLabel>
-                            <NumericEdit TValue="int" @bind-Value="NewEntity.ClassNumber">
+                            <FieldLabel>@L["Phone"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.Phone">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </NumericEdit>
+                            </TextEdit>
                         </Field>
                     </Validation>
+                    <Field>
+                        <FieldLabel>@L["HomeAddress"]</FieldLabel>
+                        <TextEdit @bind-Text="@NewEntity.HomeAddress">
+                            <Feedback>
+                                <ValidationError />
+                            </Feedback>
+                        </TextEdit>
+                    </Field>
                 </Validations>
             </ModalBody>
             <ModalFooter>
@@ -170,21 +165,10 @@
                             </TextEdit>
                         </Field>
                     </Validation>
-                    <Field>
-                        <FieldLabel>@L["Type"]</FieldLabel>
-                        <Select TValue="StudentMarkType" @bind-SelectedValue="@NewEntity.Type">
-                            @foreach (int bookTypeValue in Enum.GetValues(typeof(StudentMarkType)))
-                            {
-                                <SelectItem TValue="StudentMarkType" Value="@((StudentMarkType) bookTypeValue)">
-                                    @L[$"Enum:StudentMarkType.{bookTypeValue}"]
-                                </SelectItem>
-                            }
-                        </Select>
-                    </Field>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Email"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewEntity.Email">
+                            <TextEdit @bind-Text="@EditingEntity.Email">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -193,14 +177,22 @@
                     </Validation>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
-                            <FieldLabel>@L["ClassNumber"]</FieldLabel>
-                            <NumericEdit TValue="int" @bind-Value="NewEntity.ClassNumber">
+                            <FieldLabel>@L["Phone"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.Phone">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </NumericEdit>
+                            </TextEdit>
                         </Field>
                     </Validation>
+                    <Field>
+                        <FieldLabel>@L["HomeAddress"]</FieldLabel>
+                        <TextEdit @bind-Text="@EditingEntity.HomeAddress">
+                            <Feedback>
+                                <ValidationError />
+                            </Feedback>
+                        </TextEdit>
+                    </Field>
                 </Validations>
             </ModalBody>
             <ModalFooter>
@@ -214,7 +206,6 @@
         </Form>
     </ModalContent>
 </Modal>
-
 
 @code
 {

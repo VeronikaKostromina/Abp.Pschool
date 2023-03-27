@@ -1,5 +1,5 @@
 ﻿using System;
-using Abp.Pschool.Parents;
+using Abp.Pschool.Teachers;
 using Abp.Pschool.StudentDocuments;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -12,9 +12,9 @@ namespace Abp.Pschool.Students
         public int ClassNumber { get; set; }
         public string? Email { get; set; }
 
-        public Guid ParentId { get; set; }
-        public Parent? Parent { get; set; }
+        public Guid TeacherId { get; set; }
+        public Teacher? Teacher { get; set; }
         public StudentDocument? StudentDocument { get; set; }
-        public StudentMarkType? StudentMarkType { get; set; }
+        public StudentMarkType Type { get; set; }
     }
 }

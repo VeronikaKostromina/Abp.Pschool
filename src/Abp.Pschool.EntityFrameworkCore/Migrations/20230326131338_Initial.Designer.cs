@@ -390,7 +390,7 @@ namespace Abp.Pschool.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("ParentName")
+                    b.Property<string>("TeacherName")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -1040,7 +1040,7 @@ namespace Abp.Pschool.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<Guid?>("ParentId")
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("TenantId")
@@ -1051,7 +1051,7 @@ namespace Abp.Pschool.Migrations
 
                     b.HasIndex("Code");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("AbpOrganizationUnits", (string)null);
                 });
@@ -1455,7 +1455,7 @@ namespace Abp.Pschool.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("ParentName")
+                    b.Property<string>("TeacherName")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -1748,7 +1748,7 @@ namespace Abp.Pschool.Migrations
                 {
                     b.HasOne("Volo.Abp.Identity.OrganizationUnit", null)
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("TeacherId");
                 });
 
             modelBuilder.Entity("Volo.Abp.Identity.OrganizationUnitRole", b =>
