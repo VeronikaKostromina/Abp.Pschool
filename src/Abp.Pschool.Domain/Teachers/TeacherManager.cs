@@ -22,7 +22,7 @@ namespace Abp.Pschool.Teachers
             Check.NotNullOrWhiteSpace(lastName, nameof(lastName));
             Check.NotNullOrWhiteSpace(email, nameof(email));
 
-            var existingTeacher = await teacherRepository.FindByLastNameAsync(lastName);
+            var existingTeacher = await teacherRepository.FindByFullNameAsync(firstName, lastName);
             if (existingTeacher != null)
             {
                 throw new TeacherAlreadyExistsException(firstName, lastName);
@@ -40,7 +40,7 @@ namespace Abp.Pschool.Teachers
             Check.NotNullOrWhiteSpace(firstName, nameof(firstName));
             Check.NotNullOrWhiteSpace(lastName, nameof(lastName));
 
-            var existingTeacher = await teacherRepository.FindByLastNameAsync(lastName);
+            var existingTeacher = await teacherRepository.FindByFullNameAsync(firstName, lastName);
             if (existingTeacher != null && existingTeacher.Id != teacher.Id)
             {
                 throw new TeacherAlreadyExistsException(firstName, lastName);

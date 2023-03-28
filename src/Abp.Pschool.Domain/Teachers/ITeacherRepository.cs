@@ -7,7 +7,7 @@ namespace Abp.Pschool.Teachers
 {
     public interface ITeacherRepository : IRepository<Teacher, Guid>
     {
-        Task<Teacher> FindByLastNameAsync(string lastName);
+        Task<Teacher?> FindByFullNameAsync(string firstName, string lastName);
 
         Task<List<Teacher>> GetListAsync(
             int skipCount,
