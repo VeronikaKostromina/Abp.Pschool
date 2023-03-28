@@ -1,8 +1,34 @@
 {
-  "culture": "ru",
-  "texts": {
+  "Culture": "ru",
+  "Texts": {
     "Menu:Home": "Главная",
-    "Welcome": "Добро пожаловать",
-    "LongWelcomeMessage": "Добро пожаловать в приложение. Этот запущенный проект основан на фреймворке ABP. Для получения дополнительной информации посетите сайт abp.io."
+    "Welcome": "Добро пожаловать в приложение",
+    "LongWelcomeMessage": "Добро пожаловать в приложение. Этот запущенный проект основан на фреймворке ABP. Для получения дополнительной информации посетите сайт abp.io.",
+    "Menu:Pschool": "Информация о Pschool",
+    "Menu:Students": "Студенты",
+    "Actions": "Действия",
+    "Close": "Закрыть",
+    "Delete": "Удалить",
+    "Edit": "Редактировать",
+    "ClassNumber": "Номер группы",
+    "Email": "Почта",
+    "Phone": "Телефон",
+    "HomeAddress": "Домашний адрес",
+    "NewStudent": "Новый студент",
+    "FirstName": "Имя",
+    "LastName": "Фамилия",
+    "Type": "Тип",
+    "CreationTime": "Дата создания",
+    "AreYouSure": "Вы уверены?",
+    "AreYouSureToDelete": "Вы уверены что хотите удалить эту сущность?",
+    "Enum:StudentMarkType.0": "Превосходно",
+    "Enum:StudentMarkType.1": "Хорошо",
+    "Enum:StudentMarkType.2": "Удовлетворительно",
+    "Enum:StudentMarkType.3": "Плохо",
+    "Enum:StudentMarkType.4": "Неудовлетворительно",
+    "Menu:Teachers": "Преподаватели",
+    "NewTeacher": "Новый преподаватель",
+    "Students": "Студенты",
+    "Teachers": "Преподаватели"
   }
 }

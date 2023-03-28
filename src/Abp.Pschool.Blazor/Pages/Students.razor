@@ -1,7 +1,9 @@
 ﻿@page "/students"
+@attribute [Authorize(PschoolPermissions.Students.Default)]
 @using Volo.Abp.Application.Dtos
 @using Abp.Pschool.Students
 @using Abp.Pschool.Localization
+@using Abp.Pschool.Permissions
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<PschoolResource> L
 @inject AbpBlazorMessageLocalizerHelper<PschoolResource> LH
@@ -14,8 +16,11 @@
                 <h2>@L["Students"]</h2>
             </Column>
             <Column ColumnSize="ColumnSize.IsAuto">
+            @if (HasCreatePermission)
+            {
                 <Button Color="Color.Primary"
                         Clicked="OpenCreateModalAsync">@L["NewStudent"]</Button>
+            }
             </Column>
         </Row> 
     </CardHeader>
@@ -32,9 +37,11 @@
                         <EntityActions TItem="StudentDto" EntityActionsColumn="@EntityActionsColumn">
                             <EntityAction TItem="StudentDto"
                                           Text="@L["Edit"]"
+                                          Visible=HasUpdatePermission
                                           Clicked="() => OpenEditModalAsync(context)" />
                             <EntityAction TItem="StudentDto"
                                           Text="@L["Delete"]"
+                                          Visible=HasDeletePermission
                                           Clicked="() => DeleteEntityAsync(context)"
                                           ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />                         
                         </EntityActions>
@@ -218,4 +225,10 @@
 
 @code
 {
+    public Students()
+    {
+        CreatePolicyName = PschoolPermissions.Students.Create;
+        UpdatePolicyName = PschoolPermissions.Students.Edit;
+        DeletePolicyName = PschoolPermissions.Students.Delete;
+    }
 }

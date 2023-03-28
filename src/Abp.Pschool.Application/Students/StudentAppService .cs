@@ -1,4 +1,5 @@
 ﻿using System;
+using Abp.Pschool.Permissions;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -16,6 +17,11 @@ namespace Abp.Pschool.Students
     {
         public StudentAppService(IRepository<Student, Guid> repository) : base(repository)
         {
+            GetPolicyName = PschoolPermissions.Students.Default;
+            GetListPolicyName = PschoolPermissions.Students.Default;
+            CreatePolicyName = PschoolPermissions.Students.Create;
+            UpdatePolicyName = PschoolPermissions.Students.Edit;
+            DeletePolicyName = PschoolPermissions.Students.Delete;
         }
     }
 }

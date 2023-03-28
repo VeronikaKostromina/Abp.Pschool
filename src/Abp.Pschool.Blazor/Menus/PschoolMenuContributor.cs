@@ -49,30 +49,21 @@ public class PschoolMenuContributor : IMenuContributor
 
         context.Menu.AddItem(
             new ApplicationMenuItem(
-                "StudentStore",
-                l["Menu:StudentStore"],
+                "Pschool",
+                l["Menu:Pschool"],
                 icon: "fas fa-graduation-cap"
             ).AddItem(
                 new ApplicationMenuItem(
-                    "StudentStore.Students",
+                    "Pschool.Students",
                     l["Menu:Students"],
                     url: "/students"
                 )
             )
-        );
-
-        context.Menu.AddItem(
-            new ApplicationMenuItem(
-                "TeacherStore",
-                l["Menu:TeacherStore"],
-                icon: "fas fa-users"
-            ).AddItem(
-                new ApplicationMenuItem(
-                    "TeacherStore.Teachers",
+                .AddItem(new ApplicationMenuItem(
+                    "Pschool.Teachers",
                     l["Menu:Teachers"],
-                    url: "/Teachers"
-                )
-            )
+                    url: "/teachers"
+                ))
         );
 
 

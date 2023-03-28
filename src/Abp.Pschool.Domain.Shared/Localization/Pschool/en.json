@@ -2,9 +2,9 @@
   "Culture": "en",
   "Texts": {
     "Menu:Home": "Home",
-    "Welcome": "Welcome",
+    "Welcome": "Welcome to the application",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
-    "Menu:StudentStore": "Student Store",
+    "Menu:Pschool": "Pschool Info",
     "Menu:Students": "Students",
     "Actions": "Actions",
     "Close": "Close",
@@ -26,10 +26,19 @@
     "Enum:StudentMarkType.2": "Satisfactory",
     "Enum:StudentMarkType.3": "Bad",
     "Enum:StudentMarkType.4": "Unsatisfactory",
-    "Menu:TeacherStore": "Teacher Store",
     "Menu:Teachers": "Teachers",
     "NewTeacher": "New Teacher",
     "Students": "Students",
-    "Teachers": "Teachers"
+    "Teachers": "Teachers",
+    "Permission:Pschool": "Pschool",
+    "Permission:Students": "Student Management",
+    "Permission:Students.Create": "Creating new students",
+    "Permission:Students.Edit": "Editing the students",
+    "Permission:Students.Delete": "Deleting the students",
+    "Permission:Teachers": "Teacher Management",
+    "Permission:Teachers.Create": "Creating new teachers",
+    "Permission:Teachers.Edit": "Editing the teachers",
+    "Permission:Teachers.Delete": "Deleting the teachers"
+
   }
 }

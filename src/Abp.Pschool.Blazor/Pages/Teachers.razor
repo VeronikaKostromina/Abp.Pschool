@@ -1,7 +1,9 @@
-﻿@page "/Teachers"
+﻿@page "/teachers"
+@attribute [Authorize(PschoolPermissions.Teachers.Default)]
 @using Volo.Abp.Application.Dtos
 @using Abp.Pschool.Teachers
 @using Abp.Pschool.Localization
+@using Abp.Pschool.Permissions
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<PschoolResource> L
 @inject AbpBlazorMessageLocalizerHelper<PschoolResource> LH
@@ -14,10 +16,13 @@
                 <h2>@L["Teachers"]</h2>
             </Column>
             <Column ColumnSize="ColumnSize.IsAuto">
-                <Button Color="Color.Primary"
-                        Clicked="OpenCreateModalAsync">
-                    @L["NewTeacher"]
-                </Button>
+                @if(HasCreatePermission)
+                {
+                    <Button Color="Color.Primary"
+                            Clicked="OpenCreateModalAsync">
+                        @L["NewTeacher"]
+                    </Button>
+                }
             </Column>
         </Row>
     </CardHeader>
@@ -34,9 +39,11 @@
                         <EntityActions TItem="TeacherDto" EntityActionsColumn="@EntityActionsColumn">
                             <EntityAction TItem="TeacherDto"
                                           Text="@L["Edit"]"
+                                          Visible=HasUpdatePermission
                                           Clicked="() => OpenEditModalAsync(context)" />
                             <EntityAction TItem="TeacherDto"
                                           Text="@L["Delete"]"
+                                          Visible=HasDeletePermission
                                           Clicked="() => DeleteEntityAsync(context)"
                                           ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />                         
                         </EntityActions>
@@ -209,4 +216,10 @@
 
 @code
 {
+    public Teachers()
+    {
+        CreatePolicyName = PschoolPermissions.Teachers.Create;
+        UpdatePolicyName = PschoolPermissions.Teachers.Edit;
+        DeletePolicyName = PschoolPermissions.Teachers.Delete;
+    }
 }
