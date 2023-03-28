@@ -1,25 +1,22 @@
 ﻿@page "/teachers"
-@attribute [Authorize(PschoolPermissions.Teachers.Default)]
-@using Volo.Abp.Application.Dtos
 @using Abp.Pschool.Teachers
 @using Abp.Pschool.Localization
-@using Abp.Pschool.Permissions
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<PschoolResource> L
+@using Volo.Abp.AspNetCore.Components.Web
+@inherits PschoolComponentBase
+@inject ITeacherAppService TeacherAppService
 @inject AbpBlazorMessageLocalizerHelper<PschoolResource> LH
-@*@inherits AbpCrudPageBase<ITeacherAppService, TeacherDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTeacherDto>
-*@
-@*<Card>
+
+<Card>
     <CardHeader>
         <Row Class="justify-content-between">
             <Column ColumnSize="ColumnSize.IsAuto">
                 <h2>@L["Teachers"]</h2>
             </Column>
             <Column ColumnSize="ColumnSize.IsAuto">
-                @if(HasCreatePermission)
+                @if (CanCreateTeacher)
                 {
                     <Button Color="Color.Primary"
-                            Clicked="OpenCreateModalAsync">
+                            Clicked="OpenCreateTeacherModal">
                         @L["NewTeacher"]
                     </Button>
                 }
@@ -28,27 +25,39 @@
     </CardHeader>
     <CardBody>
         <DataGrid TItem="TeacherDto"
-                  Data="Entities"
+                  Data="TeacherList"
                   ReadData="OnDataGridReadAsync"
                   TotalItems="TotalCount"
                   ShowPager="true"
                   PageSize="PageSize">
             <DataGridColumns>
-                <DataGridEntityActionsColumn TItem="TeacherDto" @ref="@EntityActionsColumn">
+                <DataGridColumn Width="150px"
+                                TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.Id)"
+                                Sortable="false"
+                                Caption="@L["Actions"]">
                     <DisplayTemplate>
-                        <EntityActions TItem="TeacherDto" EntityActionsColumn="@EntityActionsColumn">
-                            <EntityAction TItem="TeacherDto"
-                                          Text="@L["Edit"]"
-                                          Visible=HasUpdatePermission
-                                          Clicked="() => OpenEditModalAsync(context)" />
-                            <EntityAction TItem="TeacherDto"
-                                          Text="@L["Delete"]"
-                                          Visible=HasDeletePermission
-                                          Clicked="() => DeleteEntityAsync(context)"
-                                          ConfirmationMessage="() => GetDeleteConfirmationMessage(context)" />                         
-                        </EntityActions>
-                   </DisplayTemplate>
-                </DataGridEntityActionsColumn>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                @if (CanEditTeacher)
+                                {
+                                    <DropdownItem Clicked="() => OpenEditTeacherModal(context)">
+                                        @L["Edit"]
+                                    </DropdownItem>
+                                }
+                                @if (CanDeleteTeacher)
+                                {
+                                    <DropdownItem Clicked="() => DeleteTeacherAsync(context)">
+                                        @L["Delete"]
+                                    </DropdownItem>
+                                }
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
                 <DataGridColumn TItem="TeacherDto"
                                 Field="@nameof(TeacherDto.FirstName)"
                                 Caption="@L["FirstName"]"></DataGridColumn>
@@ -70,20 +79,20 @@
     </CardBody>
 </Card>
 
-<Modal @ref="@CreateModal">
+<Modal @ref="CreateTeacherModal">
     <ModalBackdrop />
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
                 <ModalTitle>@L["NewTeacher"]</ModalTitle>
-                <CloseButton Clicked="CloseCreateModalAsync"/>
+                <CloseButton Clicked="CloseCreateTeacherModal" />
             </ModalHeader>
             <ModalBody>
-                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                <Validations @ref="@CreateValidationsRef" Model="@NewTeacher" ValidateOnLoad="false">
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["FirstName"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewEntity.FirstName">
+                            <TextEdit @bind-Text="@NewTeacher.FirstName">
                                 <Feedback>
                                     <ValidationError/>
                                 </Feedback>
@@ -93,7 +102,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["LastName"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewEntity.LastName">
+                            <TextEdit @bind-Text="@NewTeacher.LastName">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -103,7 +112,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Email"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewEntity.Email">
+                            <TextEdit @bind-Text="@NewTeacher.Email">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -113,7 +122,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Phone"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewEntity.Phone">
+                            <TextEdit @bind-Text="@NewTeacher.Phone">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -122,7 +131,7 @@
                     </Validation>
                     <Field>
                         <FieldLabel>@L["HomeAddress"]</FieldLabel>
-                        <TextEdit @bind-Text="@NewEntity.HomeAddress">
+                        <TextEdit @bind-Text="@NewTeacher.HomeAddress">
                             <Feedback>
                                 <ValidationError />
                             </Feedback>
@@ -132,30 +141,34 @@
             </ModalBody>
             <ModalFooter>
                 <Button Color="Color.Secondary"
-                        Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+                        Clicked="CloseCreateTeacherModal">
+                    @L["Cancel"]
+                </Button>
                 <Button Color="Color.Primary"
                         Type="@ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
-                        Clicked="CreateEntityAsync">@L["Save"]</Button>
+                        Clicked="CreateTeacherAsync">
+                    @L["Save"]
+                </Button>
             </ModalFooter>
         </Form>
     </ModalContent>
 </Modal>
 
-<Modal @ref="@EditModal">
+<Modal @ref="EditTeacherModal">
     <ModalBackdrop />
     <ModalContent IsCentered="true">
         <Form>
             <ModalHeader>
-                <ModalTitle>@EditingEntity.FirstName @EditingEntity.LastName</ModalTitle>
-                <CloseButton Clicked="CloseEditModalAsync"/>
+                <ModalTitle>@EditingTeacher.FirstName @EditingTeacher.LastName</ModalTitle>
+                <CloseButton Clicked="CloseEditTeacherModal" />
             </ModalHeader>
             <ModalBody>
-                <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                <Validations @ref="@EditValidationsRef" Model="@NewTeacher" ValidateOnLoad="false">
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["FirstName"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingEntity.FirstName">
+                            <TextEdit @bind-Text="@EditingTeacher.FirstName">
                                 <Feedback>
                                     <ValidationError/>
                                 </Feedback>
@@ -165,7 +178,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["LastName"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingEntity.LastName">
+                            <TextEdit @bind-Text="@EditingTeacher.LastName">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -175,7 +188,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Email"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingEntity.Email">
+                            <TextEdit @bind-Text="@EditingTeacher.Email">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -185,7 +198,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Phone"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingEntity.Phone">
+                            <TextEdit @bind-Text="@EditingTeacher.Phone">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -194,7 +207,7 @@
                     </Validation>
                     <Field>
                         <FieldLabel>@L["HomeAddress"]</FieldLabel>
-                        <TextEdit @bind-Text="@EditingEntity.HomeAddress">
+                        <TextEdit @bind-Text="@EditingTeacher.HomeAddress">
                             <Feedback>
                                 <ValidationError />
                             </Feedback>
@@ -204,16 +217,20 @@
             </ModalBody>
             <ModalFooter>
                 <Button Color="Color.Secondary"
-                        Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+                        Clicked="CloseEditTeacherModal">
+                    @L["Cancel"]
+                </Button>
                 <Button Color="Color.Primary"
                         Type="@ButtonType.Submit"
                         PreventDefaultOnSubmit="true"
-                        Clicked="UpdateEntityAsync">@L["Save"]</Button>
+                        Clicked="UpdateTeacherAsync">
+                    @L["Save"]
+                </Button>
             </ModalFooter>
         </Form>
     </ModalContent>
 </Modal>
-*@
+
 @code
 {
     
