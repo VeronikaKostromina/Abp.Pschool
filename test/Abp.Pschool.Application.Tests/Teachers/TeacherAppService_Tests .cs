@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Validation;
 using Xunit;
 
@@ -21,13 +20,11 @@ namespace Abp.Pschool.Teachers
         public async Task Should_Get_List_Of_Teachers()
         {
             //Act
-            var result = await TeacherAppService.GetListAsync(
-                new PagedAndSortedResultRequestDto()
-            );
+            var result = await TeacherAppService.GetListAsync(new GetTeacherListDto());
 
             //Assert
             result.TotalCount.ShouldBeGreaterThan(0);
-            result.Items.ShouldContain(b => b.FirstName == "BobTeacher");
+            result.Items.ShouldContain(b => b.FirstName == "James");
         }
 
         [Fact]
@@ -35,7 +32,7 @@ namespace Abp.Pschool.Teachers
         {
             //Act
             var result = await TeacherAppService.CreateAsync(
-                new CreateUpdateTeacherDto
+                new CreateTeacherDto
                 {
                     FirstName = "GlenTeacher",
                     LastName = "Anderson",
@@ -54,7 +51,7 @@ namespace Abp.Pschool.Teachers
             var exception = await Assert.ThrowsAsync<AbpValidationException>(async () =>
             {
                 await TeacherAppService.CreateAsync(
-                    new CreateUpdateTeacherDto
+                    new CreateTeacherDto
                     {
                         FirstName = "",
                         LastName = "Wizli",

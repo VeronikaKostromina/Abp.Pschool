@@ -10,6 +10,7 @@ public class PschoolBlazorAutoMapperProfile : Profile
     {
         CreateMap<StudentDto, CreateUpdateStudentDto>();
 
-        CreateMap<TeacherDto, CreateUpdateTeacherDto>();
+        CreateMap<TeacherDto, CreateTeacherDto>();
+        CreateMap<TeacherDto, UpdateTeacherDto>();
     }
 }

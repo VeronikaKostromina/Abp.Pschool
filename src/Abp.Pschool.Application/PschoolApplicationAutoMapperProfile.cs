@@ -13,6 +13,7 @@ public class PschoolApplicationAutoMapperProfile : Profile
 
 
         CreateMap<Teacher, TeacherDto>();
-        CreateMap<CreateUpdateTeacherDto, Teacher>();
+        CreateMap<CreateTeacherDto, Teacher>();
+        CreateMap<UpdateTeacherDto, Teacher>();
     }
 }

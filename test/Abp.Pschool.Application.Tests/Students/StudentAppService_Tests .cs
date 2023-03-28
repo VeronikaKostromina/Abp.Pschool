@@ -41,7 +41,8 @@ namespace Abp.Pschool.Students
                     LastName = "Anderson",
                     ClassNumber = 1,
                     Email = "anderson@gmail.com",
-                    Type = StudentMarkType.Excellent
+                    Type = StudentMarkType.Excellent,
+                    TeacherId = new Guid("A1406660-F4BF-7F73-DD9C-3A0A3A8D633A")
                 }
             );
 

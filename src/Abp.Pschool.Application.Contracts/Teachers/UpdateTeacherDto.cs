@@ -2,7 +2,7 @@
 
 namespace Abp.Pschool.Teachers
 {
-    public class CreateUpdateTeacherDto
+    public class UpdateTeacherDto
     {
         [Required(ErrorMessage = "First name can not be empty")]
         [StringLength(50, ErrorMessage = "First name can not be more than 50 symbols")]

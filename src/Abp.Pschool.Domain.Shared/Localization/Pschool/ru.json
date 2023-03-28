@@ -29,6 +29,17 @@
     "Menu:Teachers": "Преподаватели",
     "NewTeacher": "Новый преподаватель",
     "Students": "Студенты",
-    "Teachers": "Преподаватели"
+    "Teachers": "Преподаватели",
+    "Permission:Pschool": "Pschool",
+    "Permission:Students": "Управление студентами",
+    "Permission:Students.Create": "Создание новых студентов",
+    "Permission:Students.Edit": "Редактирование студентов",
+    "Permission:Students.Delete": "Удаление студентов",
+    "Permission:Teachers": "Управление преподавателями",
+    "Permission:Teachers.Create": "Создание новых преподавателей",
+    "Permission:Teachers.Edit": "Редактирование преподавателей",
+    "Permission:Teachers.Delete": "Удаление преподавателей",
+    "Pschool:00001": "Преподаватель с таким именем и фамилией уже есть в приложении: {name}"
+
   }
 }

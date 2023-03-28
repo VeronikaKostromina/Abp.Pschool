@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Abp.Pschool.Migrations
 {
     [DbContext(typeof(PschoolDbContext))]
-    [Migration("20230327124509_Create_Student_Teacher_StudentDocument_Entity")]
+    [Migration("20230328131907_Create_Student_Teacher_StudentDocument_Entity")]
     partial class CreateStudentTeacherStudentDocumentEntity
     {
         /// <inheritdoc />
@@ -151,6 +151,14 @@ namespace Abp.Pschool.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -165,6 +173,12 @@ namespace Abp.Pschool.Migrations
 
                     b.Property<string>("HomeAddress")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")

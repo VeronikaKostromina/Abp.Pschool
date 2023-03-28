@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace Abp.Pschool.Teachers
 {
-    public interface ITeacherAppService :
-        ICrudAppService< //Defines CRUD methods
-            TeacherDto, //Used to show Teachers
-            Guid, //Primary key of the Teacher entity
-            PagedAndSortedResultRequestDto, //Used for paging/sorting
-            CreateUpdateTeacherDto> //Used to create/update a Teacher
+    public interface ITeacherAppService : IApplicationService
     {
+        Task<TeacherDto> GetAsync(Guid id);
+
+        Task<PagedResultDto<TeacherDto>> GetListAsync(GetTeacherListDto input);
+
+        Task<TeacherDto> CreateAsync(CreateTeacherDto input);
+
+        Task UpdateAsync(Guid id, UpdateTeacherDto input);
+
+        Task DeleteAsync(Guid id);
     }
 }

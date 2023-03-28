@@ -39,6 +39,6 @@
     "Permission:Teachers.Create": "Creating new teachers",
     "Permission:Teachers.Edit": "Editing the teachers",
     "Permission:Teachers.Delete": "Deleting the teachers",
-    "Pschool:00001": "There is already an author with the same name: {name}"
+    "Pschool:00001": "There is already a teacher with the same first and last name: {name}"
   }
 }

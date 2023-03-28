@@ -7,9 +7,9 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<PschoolResource> L
 @inject AbpBlazorMessageLocalizerHelper<PschoolResource> LH
-@inherits AbpCrudPageBase<ITeacherAppService, TeacherDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTeacherDto>
-
-<Card>
+@*@inherits AbpCrudPageBase<ITeacherAppService, TeacherDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTeacherDto>
+*@
+@*<Card>
     <CardHeader>
         <Row Class="justify-content-between">
             <Column ColumnSize="ColumnSize.IsAuto">
@@ -213,13 +213,8 @@
         </Form>
     </ModalContent>
 </Modal>
-
+*@
 @code
 {
-    public Teachers()
-    {
-        CreatePolicyName = PschoolPermissions.Teachers.Create;
-        UpdatePolicyName = PschoolPermissions.Teachers.Edit;
-        DeletePolicyName = PschoolPermissions.Teachers.Delete;
-    }
+    
 }
