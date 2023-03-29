@@ -21,11 +21,11 @@
     "CreationTime": "Creation time",
     "AreYouSure": "Are you sure?",
     "AreYouSureToDelete": "Are you sure you want to delete this item?",
-    "Enum:StudentMarkType.0": "Excellent",
-    "Enum:StudentMarkType.1": "Good",
-    "Enum:StudentMarkType.2": "Satisfactory",
-    "Enum:StudentMarkType.3": "Bad",
-    "Enum:StudentMarkType.4": "Unsatisfactory",
+    "Enum:StudentMarkType.Excellent": "Excellent",
+    "Enum:StudentMarkType.Good": "Good",
+    "Enum:StudentMarkType.Satisfactory": "Satisfactory",
+    "Enum:StudentMarkType.Bad": "Bad",
+    "Enum:StudentMarkType.Unsatisfactory": "Unsatisfactory",
     "Menu:Teachers": "Teachers",
     "NewTeacher": "New Teacher",
     "Students": "Students",
@@ -39,6 +39,9 @@
     "Permission:Teachers.Create": "Creating new teachers",
     "Permission:Teachers.Edit": "Editing the teachers",
     "Permission:Teachers.Delete": "Deleting the teachers",
-    "Pschool:00001": "There is already a teacher with the same first and last name: {name}"
+    "Pschool:00001": "There is already a teacher with the same first and last name: {name}",
+    "ATeacherIsRequiredForCreatingStudent": "A teacher is required for creating student",
+    "ShowStudentList": "Show list of students",
+    "StudentList":  "List of student" 
   }
 }

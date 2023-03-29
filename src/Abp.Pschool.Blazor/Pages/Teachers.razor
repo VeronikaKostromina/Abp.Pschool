@@ -1,6 +1,7 @@
 ﻿@page "/teachers"
 @using Abp.Pschool.Teachers
 @using Abp.Pschool.Localization
+@using Abp.Pschool.Students
 @using Volo.Abp.AspNetCore.Components.Web
 @inherits PschoolComponentBase
 @inject ITeacherAppService TeacherAppService
@@ -26,8 +27,8 @@
     <CardBody>
         <DataGrid TItem="TeacherDto"
                   Data="TeacherList"
-                  ReadData="OnDataGridReadAsync"
-                  TotalItems="TotalCount"
+                  ReadData="OnDataGridReadTeachersAsync"
+                  TotalItems="TotalTeacherCount"
                   ShowPager="true"
                   PageSize="PageSize">
             <DataGridColumns>
@@ -54,6 +55,9 @@
                                         @L["Delete"]
                                     </DropdownItem>
                                 }
+                                <DropdownItem Clicked="() => OpenStudentListModal(context)">
+                                    @L["ShowStudentList"]
+                                </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </DisplayTemplate>
@@ -225,6 +229,55 @@
                         PreventDefaultOnSubmit="true"
                         Clicked="UpdateTeacherAsync">
                     @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="StudentListModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true" Size="ModalSize.Large">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["StudentList"]</ModalTitle>
+                <CloseButton Clicked="CloseStudentListModal" />
+            </ModalHeader>
+            <ModalBody>
+                <DataGrid TItem="StudentDto"
+                          Data="StudentList"
+                          ReadData="OnDataGridReadStudentsAsync"
+                          TotalItems="TotalStudentCount"
+                          ShowPager="true"
+                          PageSize="PageSize">
+                    <DataGridColumns>
+                        <DataGridColumn TItem="StudentDto"
+                                        Field="@nameof(StudentDto.FirstName)"
+                                        Caption="@L["FirstName"]"></DataGridColumn>
+                        <DataGridColumn TItem="StudentDto"
+                                        Field="@nameof(StudentDto.LastName)"
+                                        Caption="@L["LastName"]"></DataGridColumn>
+                        <DataGridColumn TItem="StudentDto"
+                                        Field="@nameof(StudentDto.ClassNumber)"
+                                        Caption="@L["Phone"]"></DataGridColumn>
+                        <DataGridColumn TItem="StudentDto"
+                                        Field="@nameof(StudentDto.Email)"
+                                        Caption="@L["Email"]">
+                        </DataGridColumn>
+                        <DataGridColumn TItem="StudentDto"
+                                        Field="@nameof(StudentDto.Type)"
+                                        Caption="@L["Type"]">
+                            <DisplayTemplate>
+                                @L[$"Enum:StudentMarkType.{context.Type}"]
+                            </DisplayTemplate>
+                        </DataGridColumn>
+                    </DataGridColumns>
+                </DataGrid>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseStudentListModal">
+                    @L["Cancel"]
                 </Button>
             </ModalFooter>
         </Form>

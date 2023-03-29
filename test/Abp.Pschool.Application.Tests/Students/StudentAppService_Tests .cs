@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Abp.Pschool.Teachers;
 using Shouldly;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Validation;
@@ -11,10 +12,12 @@ namespace Abp.Pschool.Students
     public class StudentAppService_Tests : PschoolApplicationTestBase
     {
         private readonly IStudentAppService studentAppService;
+        private readonly ITeacherAppService teacherAppService;
 
         public StudentAppService_Tests()
         {
             this.studentAppService = GetRequiredService<IStudentAppService>();
+            this.teacherAppService = GetRequiredService<ITeacherAppService>();
         }
 
         [Fact]
@@ -33,6 +36,10 @@ namespace Abp.Pschool.Students
         [Fact]
         public async Task Should_Create_A_Valid_Student()
         {
+            //Arrange
+            var teacher = (await teacherAppService.GetListAsync(new GetTeacherListDto()))
+                .Items.First();
+
             //Act
             var result = await studentAppService.CreateAsync(
                 new CreateUpdateStudentDto
@@ -42,7 +49,7 @@ namespace Abp.Pschool.Students
                     ClassNumber = 1,
                     Email = "anderson@gmail.com",
                     Type = StudentMarkType.Excellent,
-                    TeacherId = new Guid("A1406660-F4BF-7F73-DD9C-3A0A3A8D633A")
+                    TeacherId = teacher.Id
                 }
             );
 

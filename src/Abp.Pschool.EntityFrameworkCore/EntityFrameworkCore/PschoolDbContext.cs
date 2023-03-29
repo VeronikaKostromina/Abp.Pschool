@@ -95,7 +95,7 @@ public class PschoolDbContext :
             b.Property(x => x.Email).IsRequired();
 
             b
-                .HasOne(x => x.Teacher)
+                .HasOne<Teacher>()
                 .WithMany(x => x.Students)
                 .HasForeignKey(x => x.TeacherId);
             b

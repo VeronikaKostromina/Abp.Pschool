@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
@@ -11,5 +12,6 @@ namespace Abp.Pschool.Students
             PagedAndSortedResultRequestDto, //Used for paging/sorting
             CreateUpdateStudentDto> //Used to create/update a student
     {
+        Task<ListResultDto<TeacherLookupDto>> GetAuthorLookupAsync();
     }
 }

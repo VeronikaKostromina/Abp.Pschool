@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Abp.Pschool.Students;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
@@ -16,5 +17,6 @@ namespace Abp.Pschool.Teachers
         Task UpdateAsync(Guid id, UpdateTeacherDto input);
 
         Task DeleteAsync(Guid id);
+        Task<PagedResultDto<StudentDto>> GetStudentListForCurrentTeacher(Guid id, GetStudentListDto input);
     }
 }

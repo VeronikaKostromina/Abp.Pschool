@@ -13,7 +13,8 @@ namespace Abp.Pschool.Teachers
     public class EfCoreTeacherRepository : EfCoreRepository<PschoolDbContext, Teacher, Guid>,
         ITeacherRepository
     {
-        public EfCoreTeacherRepository(IDbContextProvider<PschoolDbContext> dbContextProvider) : base(dbContextProvider)
+        public EfCoreTeacherRepository(IDbContextProvider<PschoolDbContext> dbContextProvider)
+            : base(dbContextProvider)
         {
         }
 

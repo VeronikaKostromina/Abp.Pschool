@@ -21,11 +21,11 @@
     "CreationTime": "Дата создания",
     "AreYouSure": "Вы уверены?",
     "AreYouSureToDelete": "Вы уверены что хотите удалить эту сущность?",
-    "Enum:StudentMarkType.0": "Превосходно",
-    "Enum:StudentMarkType.1": "Хорошо",
-    "Enum:StudentMarkType.2": "Удовлетворительно",
-    "Enum:StudentMarkType.3": "Плохо",
-    "Enum:StudentMarkType.4": "Неудовлетворительно",
+    "Enum:StudentMarkType.Excellent": "Превосходно",
+    "Enum:StudentMarkType.Good": "Хорошо",
+    "Enum:StudentMarkType.Satisfactory": "Удовлетворительно",
+    "Enum:StudentMarkType.Bad": "Плохо",
+    "Enum:StudentMarkType.Unsatisfactory": "Неудовлетворительно",
     "Menu:Teachers": "Преподаватели",
     "NewTeacher": "Новый преподаватель",
     "Students": "Студенты",
@@ -39,7 +39,9 @@
     "Permission:Teachers.Create": "Создание новых преподавателей",
     "Permission:Teachers.Edit": "Редактирование преподавателей",
     "Permission:Teachers.Delete": "Удаление преподавателей",
-    "Pschool:00001": "Преподаватель с таким именем и фамилией уже есть в приложении: {name}"
-
+    "Pschool:00001": "Преподаватель с таким именем и фамилией уже есть в приложении: {name}",
+    "ATeacherIsRequiredForCreatingStudent": "Преподаватель необходим для создания студента",
+    "ShowStudentList": "Показать список студентов",
+    "StudentList": "Список студентов" 
   }
 }

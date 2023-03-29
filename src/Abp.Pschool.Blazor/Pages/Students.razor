@@ -5,7 +5,9 @@
 @using Abp.Pschool.Localization
 @using Abp.Pschool.Permissions
 @using Microsoft.Extensions.Localization
+@using Volo.Abp
 @inject IStringLocalizer<PschoolResource> L
+@inject IStudentAppService StudentAppService
 @inject AbpBlazorMessageLocalizerHelper<PschoolResource> LH
 @inherits AbpCrudPageBase<IStudentAppService, StudentDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateStudentDto>
 
@@ -67,6 +69,10 @@
                                 Field="@nameof(StudentDto.Email)"
                                 Caption="@L["Email"]">
                 </DataGridColumn>
+                <DataGridColumn TItem="StudentDto"
+                                Field="@nameof(StudentDto.TeacherFullName)"
+                                Caption="@L["Teacher"]">
+                </DataGridColumn>
             </DataGridColumns>
         </DataGrid>
     </CardBody>
@@ -105,10 +111,10 @@
                     <Field>
                         <FieldLabel>@L["Type"]</FieldLabel>
                         <Select TValue="StudentMarkType" @bind-SelectedValue="@NewEntity.Type">
-                            @foreach (int bookTypeValue in Enum.GetValues(typeof(StudentMarkType)))
+                            @foreach (int type in Enum.GetValues(typeof(StudentMarkType)))
                             {
-                                <SelectItem TValue="StudentMarkType" Value="@((StudentMarkType) bookTypeValue)">
-                                    @L[$"Enum:StudentMarkType.{bookTypeValue}"]
+                                <SelectItem TValue="StudentMarkType" Value="@((StudentMarkType) type)">
+                                    @L[$"Enum:StudentMarkType.{type}"]
                                 </SelectItem>
                             }
                         </Select>
@@ -133,6 +139,17 @@
                             </NumericEdit>
                         </Field>
                     </Validation>
+                    <Field>
+                        <FieldLabel>@L["Teacher"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@NewEntity.TeacherId">
+                            @foreach (var tech in teacherList)
+                            {
+                                <SelectItem TValue="Guid" Value="@tech.Id">
+                                    @tech.FirstName @tech.LastName
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
                 </Validations>
             </ModalBody>
             <ModalFooter>
@@ -150,7 +167,7 @@
 <Modal @ref="@EditModal">
     <ModalBackdrop />
     <ModalContent IsCentered="true">
-        <Form>
+        <Form>er
             <ModalHeader>
                 <ModalTitle>@EditingEntity.FirstName @EditingEntity.LastName</ModalTitle>
                 <CloseButton Clicked="CloseEditModalAsync"/>
@@ -179,11 +196,11 @@
                     </Validation>
                     <Field>
                         <FieldLabel>@L["Type"]</FieldLabel>
-                        <Select TValue="StudentMarkType" @bind-SelectedValue="@NewEntity.Type">
-                            @foreach (int bookTypeValue in Enum.GetValues(typeof(StudentMarkType)))
+                        <Select TValue="StudentMarkType" @bind-SelectedValue="@EditingEntity.Type">
+                            @foreach (int type in Enum.GetValues(typeof(StudentMarkType)))
                             {
-                                <SelectItem TValue="StudentMarkType" Value="@((StudentMarkType) bookTypeValue)">
-                                    @L[$"Enum:StudentMarkType.{bookTypeValue}"]
+                                <SelectItem TValue="StudentMarkType" Value="@((StudentMarkType) type)">
+                                    @L[$"Enum:StudentMarkType.{type}"]
                                 </SelectItem>
                             }
                         </Select>
@@ -191,7 +208,7 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Email"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewEntity.Email">
+                            <TextEdit @bind-Text="@EditingEntity.Email">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
@@ -201,14 +218,25 @@
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["ClassNumber"]</FieldLabel>
-                            <NumericEdit TValue="int" @bind-Value="NewEntity.ClassNumber">
+                            <NumericEdit TValue="int" @bind-Value="EditingEntity.ClassNumber">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
                             </NumericEdit>
                         </Field>
                     </Validation>
-                </Validations>
+                    <Field>
+                        <FieldLabel>@L["Teacher"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingEntity.TeacherId">
+                            @foreach (var tech in teacherList)
+                            {
+                                <SelectItem TValue="Guid" Value="@tech.Id">
+                                    @tech.FirstName @tech.LastName
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>                
+                    </Validations>
             </ModalBody>
             <ModalFooter>
                 <Button Color="Color.Secondary"
@@ -225,10 +253,29 @@
 
 @code
 {
+    IReadOnlyList<TeacherLookupDto> teacherList = Array.Empty<TeacherLookupDto>();
+
     public Students()
     {
         CreatePolicyName = PschoolPermissions.Students.Create;
         UpdatePolicyName = PschoolPermissions.Students.Edit;
         DeletePolicyName = PschoolPermissions.Students.Delete;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        teacherList = (await StudentAppService.GetAuthorLookupAsync()).Items;
+    }
+
+    protected override async Task OpenCreateModalAsync()
+    {
+        if (!teacherList.Any())
+        {
+            throw new UserFriendlyException(message: L["ATeacherIsRequiredForCreatingStudent"]);
+        }
+        
+        await base.OpenCreateModalAsync();
+        NewEntity.TeacherId = teacherList.First().Id;
     }
 }

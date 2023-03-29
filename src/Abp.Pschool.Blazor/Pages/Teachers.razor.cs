@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Pschool.Permissions;
+using Abp.Pschool.Students;
 using Abp.Pschool.Teachers;
 using Blazorise;
 using Blazorise.DataGrid;
@@ -14,11 +15,16 @@ namespace Abp.Pschool.Blazor.Pages
     public partial class Teachers
     {
         private IReadOnlyList<TeacherDto> TeacherList { get; set; }
+        private IReadOnlyList<StudentDto> StudentList { get; set; }
 
         private int PageSize { get; } = LimitedResultRequestDto.DefaultMaxResultCount;
-        private int CurrentPage { get; set; }
-        private string CurrentSorting { get; set; }
-        private int TotalCount { get; set; }
+        private int CurrentTeacherPage { get; set; }
+        private string CurrentTeacherSorting { get; set; }
+        private int CurrentStudentPage { get; set; }
+        private string CurrentStudentSorting { get; set; }
+
+        private int TotalTeacherCount { get; set; }
+        private int TotalStudentCount { get; set; }
 
         private bool CanCreateTeacher { get; set; }
         private bool CanEditTeacher { get; set; }
@@ -27,10 +33,13 @@ namespace Abp.Pschool.Blazor.Pages
         private CreateTeacherDto NewTeacher { get; set; }
 
         private Guid EditingTeacherId { get; set; }
+        private Guid CurrentTeacherId { get; set; }
+
         private UpdateTeacherDto EditingTeacher { get; set; }
 
         private Modal CreateTeacherModal { get; set; }
         private Modal EditTeacherModal { get; set; }
+        private Modal StudentListModal { get; set; }
 
         private Validations CreateValidationsRef;
 
@@ -66,22 +75,22 @@ namespace Abp.Pschool.Blazor.Pages
                 new GetTeacherListDto
                 {
                     MaxResultCount = PageSize,
-                    SkipCount = CurrentPage * PageSize,
-                    Sorting = CurrentSorting
+                    SkipCount = CurrentTeacherPage * PageSize,
+                    Sorting = CurrentTeacherSorting
                 }
             );
 
             TeacherList = result.Items;
-            TotalCount = (int)result.TotalCount;
+            TotalTeacherCount = (int)result.TotalCount;
         }
 
-        private async Task OnDataGridReadAsync(DataGridReadDataEventArgs<TeacherDto> e)
+        private async Task OnDataGridReadTeachersAsync(DataGridReadDataEventArgs<TeacherDto> e)
         {
-            CurrentSorting = e.Columns
+            CurrentTeacherSorting = e.Columns
                 .Where(c => c.SortDirection != SortDirection.Default)
                 .Select(c => c.Field + (c.SortDirection == SortDirection.Descending ? " DESC" : ""))
                 .JoinAsString(",");
-            CurrentPage = e.Page - 1;
+            CurrentTeacherPage = e.Page - 1;
 
             await GetTeachersAsync();
 
@@ -145,6 +154,45 @@ namespace Abp.Pschool.Blazor.Pages
                 await GetTeachersAsync();
                 await EditTeacherModal.Hide();
             }
+        }
+
+        private async void OpenStudentListModal(TeacherDto teacher)
+        {
+            CurrentTeacherId = teacher.Id;
+            await GetStudentsAsync();
+            StudentListModal.Show();
+        }
+
+        private void CloseStudentListModal()
+        {
+            StudentListModal.Hide();
+        }
+
+        private async Task GetStudentsAsync()
+        {
+            var result = await TeacherAppService.GetStudentListForCurrentTeacher(CurrentTeacherId,
+                new GetStudentListDto
+                {
+                    MaxResultCount = PageSize,
+                    SkipCount = CurrentStudentPage * PageSize,
+                    Sorting = CurrentStudentSorting
+                });
+
+            StudentList = result.Items;
+            TotalStudentCount = (int)result.TotalCount;
+        }
+
+        private async Task OnDataGridReadStudentsAsync(DataGridReadDataEventArgs<StudentDto> e)
+        {
+            CurrentStudentSorting = e.Columns
+                .Where(c => c.SortDirection != SortDirection.Default)
+                .Select(c => c.Field + (c.SortDirection == SortDirection.Descending ? " DESC" : ""))
+                .JoinAsString(",");
+            CurrentStudentPage = e.Page - 1;
+
+            await GetStudentsAsync();
+
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

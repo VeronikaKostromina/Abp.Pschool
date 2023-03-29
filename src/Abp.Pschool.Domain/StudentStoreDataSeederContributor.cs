@@ -58,7 +58,7 @@ namespace Abp.Pschool
                             ClassNumber = 1,
                             Email = "jones@gmail.com",
                             Type = StudentMarkType.Excellent,
-                            Teacher = teacher1
+                            TeacherId = teacher1.Id
                         },
                         autoSave: true
                     );
@@ -71,7 +71,7 @@ namespace Abp.Pschool
                             ClassNumber = 10,
                             Email = "smith@gmail.com",
                             Type = StudentMarkType.Satisfactory,
-                            Teacher = teacher2
+                            TeacherId = teacher2.Id
                         },
                         autoSave: true
                     );

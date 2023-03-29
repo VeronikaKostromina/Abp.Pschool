@@ -15,5 +15,6 @@ public class PschoolApplicationAutoMapperProfile : Profile
         CreateMap<Teacher, TeacherDto>();
         CreateMap<CreateTeacherDto, Teacher>();
         CreateMap<UpdateTeacherDto, Teacher>();
+        CreateMap<Teacher, TeacherLookupDto>();
     }
 }
